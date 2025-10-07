@@ -6,7 +6,7 @@ export default class Column {
         this.udtName = udtName;
         this.isNullable = isNullable;
         this.isForeignKey = isForeignKey;
-        this.foreignKeyName = foreignKeyTable;
+        this.foreignKeyTable = foreignKeyTable;
         this.foreignKeyName = foreignKeyName;
         this.isEnum = isEnum || false;
         this.enumType = enumType ||'';

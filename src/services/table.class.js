@@ -17,6 +17,7 @@ export default class Table {
 
         for( let column of tableInfo.rows){
             this.columns.push(new Column(
+                // insert the info
             ));
         }
     }
