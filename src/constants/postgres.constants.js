@@ -1,185 +1,165 @@
 const postgresTypes = {
   numeric: [
     "smallint",
-    "integer", "int",
+    "integer",
+    "int",
     "bigint",
-    "decimal", "numeric",
+    "decimal",
+    "numeric",
     "real",
     "double precision",
-    "serial", "bigserial", "smallserial"
+    "serial",
+    "bigserial",
+    "smallserial",
   ],
-  monetary: [
-    "money"
-  ],
-  character: [
-    "character varying", "varchar",
-    "character", "char",
-    "text"
-  ],
-  binary: [
-    "bytea"
-  ],
+  monetary: ["money"],
+  character: ["character varying", "varchar", "character", "char", "text"],
+  binary: ["bytea"],
   datetime: [
-    "timestamp", "timestamp with time zone", "timestamptz",
+    "timestamp",
+    "timestamp with time zone",
+    "timestamptz",
     "date",
-    "time", "time with time zone", "timetz",
-    "interval"
+    "time",
+    "time with time zone",
+    "timetz",
+    "interval",
   ],
-  boolean: [
-    "boolean"
-  ],
-  enum_user_defined: [
-    "enum",
-    "composite",
-    "domain"
-  ],
-  geometric: [
-    "point", "line", "lseg",
-    "box", "path", "polygon", "circle"
-  ],
-  network: [
-    "cidr", "inet", "macaddr", "macaddr8"
-  ],
-  bit_string: [
-    "bit", "bit varying", "varbit"
-  ],
-  text_search: [
-    "tsvector", "tsquery"
-  ],
-  uuid: [
-    "uuid"
-  ],
-  json: [
-    "json", "jsonb"
-  ],
-  xml: [
-    "xml"
-  ],
-  array: [
-    "any[]", 
-  ],
+  boolean: ["boolean"],
+  enum_user_defined: ["enum", "composite", "domain"],
+  geometric: ["point", "line", "lseg", "box", "path", "polygon", "circle"],
+  network: ["cidr", "inet", "macaddr", "macaddr8"],
+  bit_string: ["bit", "bit varying", "varbit"],
+  text_search: ["tsvector", "tsquery"],
+  uuid: ["uuid"],
+  json: ["json", "jsonb"],
+  xml: ["xml"],
+  array: ["any[]"],
   range: [
-    "int4range", "int8range", "numrange",
-    "tsrange", "tstzrange", "daterange"
-  ]
+    "int4range",
+    "int8range",
+    "numrange",
+    "tsrange",
+    "tstzrange",
+    "daterange",
+  ],
 };
-
 
 const types = {
   // Numeric types
   smallint: {
     javascripttype: "number",
-    description: "2-byte integer, range -32,768 to +32,767"
+    description: "2-byte integer, range -32,768 to +32,767",
   },
   integer: {
     javascripttype: "number",
     description: "4-byte integer, range -2,147,483,648 to +2,147,483,647",
-    aliases: ["int"]
+    aliases: ["int"],
   },
   bigint: {
     javascripttype: "bigint",
-    description: "8-byte integer, range up to ±9,223,372,036,854,775,807"
+    description: "8-byte integer, range up to ±9,223,372,036,854,775,807",
   },
   decimal: {
     javascripttype: "string",
     description: "Arbitrary precision exact numeric",
-    aliases: ["numeric"]
+    aliases: ["numeric"],
   },
   real: {
     javascripttype: "number",
-    description: "4-byte floating point number"
+    description: "4-byte floating point number",
   },
   "double precision": {
     javascripttype: "number",
-    description: "8-byte floating point number"
+    description: "8-byte floating point number",
   },
   serial: {
     javascripttype: "number",
-    description: "Auto-incrementing 4-byte integer"
+    description: "Auto-incrementing 4-byte integer",
   },
   bigserial: {
     javascripttype: "bigint",
-    description: "Auto-incrementing 8-byte integer"
+    description: "Auto-incrementing 8-byte integer",
   },
   smallserial: {
     javascripttype: "number",
-    description: "Auto-incrementing 2-byte integer"
+    description: "Auto-incrementing 2-byte integer",
   },
 
   // Monetary
   money: {
     javascripttype: "string",
-    description: "Currency amount with fixed fractional precision"
+    description: "Currency amount with fixed fractional precision",
   },
 
   // Character types
   "character varying": {
     javascripttype: "string",
     description: "Variable-length string",
-    aliases: ["varchar"]
+    aliases: ["varchar"],
   },
   character: {
     javascripttype: "string",
     description: "Fixed-length string",
-    aliases: ["char"]
+    aliases: ["char"],
   },
   text: {
     javascripttype: "string",
-    description: "Variable unlimited length string"
+    description: "Variable unlimited length string",
   },
 
   // Binary
   bytea: {
     javascripttype: "Buffer",
-    description: "Binary data (byte array)"
+    description: "Binary data (byte array)",
   },
 
   // Date/time
   timestamp: {
     javascripttype: "Date",
-    description: "Date and time (no time zone)"
+    description: "Date and time (no time zone)",
   },
   "timestamp with time zone": {
     javascripttype: "Date",
     description: "Date and time with time zone",
-    aliases: ["timestamptz"]
+    aliases: ["timestamptz"],
   },
   date: {
     javascripttype: "Date",
-    description: "Calendar date (year, month, day)"
+    description: "Calendar date (year, month, day)",
   },
   time: {
     javascripttype: "string",
-    description: "Time of day (no time zone)"
+    description: "Time of day (no time zone)",
   },
   "time with time zone": {
     javascripttype: "string",
     description: "Time of day with time zone",
-    aliases: ["timetz"]
+    aliases: ["timetz"],
   },
   interval: {
     javascripttype: "string",
-    description: "Time span (e.g. 1 day 2 hours)"
+    description: "Time span (e.g. 1 day 2 hours)",
   },
 
   // Boolean
   boolean: {
     javascripttype: "boolean",
-    description: "Logical Boolean (true/false)"
+    description: "Logical Boolean (true/false)",
   },
 
   // User-defined
   enum: {
     javascripttype: "string",
-    description: "Enumerated type"
+    description: "Enumerated type",
   },
   composite: {
     javascripttype: "object",
-    description: "Composite type (row-like structure)"
+    description: "Composite type (row-like structure)",
   },
   domain: {
     javascripttype: "depends",
-    description: "User-defined domain type"
+    description: "User-defined domain type",
   },
 
   // Geometric
@@ -202,7 +182,7 @@ const types = {
   "bit varying": {
     javascripttype: "string",
     description: "Variable-length bit string",
-    aliases: ["varbit"]
+    aliases: ["varbit"],
   },
 
   // Text search
@@ -220,7 +200,10 @@ const types = {
   xml: { javascripttype: "string", description: "XML data" },
 
   // Arrays
-  "any[]": { javascripttype: "array", description: "Array of any element type" },
+  "any[]": {
+    javascripttype: "array",
+    description: "Array of any element type",
+  },
 
   // Ranges
   int4range: { javascripttype: "object", description: "Range of integer" },
@@ -228,5 +211,5 @@ const types = {
   numrange: { javascripttype: "object", description: "Range of numeric" },
   tsrange: { javascripttype: "object", description: "Range of timestamp" },
   tstzrange: { javascripttype: "object", description: "Range of timestamptz" },
-  daterange: { javascripttype: "object", description: "Range of date" }
+  daterange: { javascripttype: "object", description: "Range of date" },
 };
