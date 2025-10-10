@@ -1,5 +1,6 @@
 // import all the things
 
+import Dag from "./Dag.class.js";
 import Connection from "./database.connection.js";
 import databaseOrm from "./databaseOrm.class.js";
 import Table from "./table.class.js";
@@ -18,7 +19,8 @@ export default class Seeder {
       port: pgDetails.port,
     });
     this.database = new databaseOrm(this.connect);
-    this.tables = [];
+    this.tables = {};
+    this.tableSize = 0
   }
 
   // load all the details
@@ -27,6 +29,8 @@ export default class Seeder {
       // get all tables
       const { rows: allTables } = await this.database.getTables(schema);
 
+      this.tableSize = allTables.size();
+
       for (let table of allTables) {
         await this.addTable(
           await Table.create({
@@ -34,20 +38,29 @@ export default class Seeder {
             schema,
             database: this.database,
           }),
+          table.table_name
         );
       }
     }
   }
 
   // add table
-  async addTable(table) {
-    return this.tables.push(table);
+  async addTable(table, tableName) {
+    return this.tables[tableName] = table;
+  }
+
+  async generateRows(){
+
   }
 
   // this will initialize all the tables
   async run() {
     try {
       await this.build();
+
+      const dag = new Dag(this.tables, this.tableSize);
+      dag.create();
+
     } catch (error) {
       console.log(error);
       console.log("closing the connection");

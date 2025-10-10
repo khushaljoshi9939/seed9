@@ -9,6 +9,7 @@ export default class Table {
     this.columns = [];
     this.isForeignColumns = false;
     this.foreignColumns = {};
+    this.foreignTableNames = new Set()
   }
 
   // load columns
@@ -24,6 +25,7 @@ export default class Table {
           isNullable: column.is_nullable,
           db: this.database,
         }),
+        
       );
     }
   }
@@ -43,6 +45,9 @@ export default class Table {
         foreign_table: row["foreign_table"],
         foreign_column: row["foreign_column"],
       };
+
+      // adding this to the set
+      this.foreignTableNames.add(row["foreign_table"]);
     }
   }
 
